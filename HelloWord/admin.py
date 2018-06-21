@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .model import UserMore, Word, Vocabulary, Note, UserWord, Task
+from .models import UserMore, Word, Vocabulary, Note, UserWord, Task
 
 admin.site.register(UserMore)
 admin.site.register(UserWord)

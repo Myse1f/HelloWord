@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -12,14 +12,14 @@ class Word(models.Model):
     example = models.TextField(default='')
     vocabularys = models.ManyToManyField('Vocabulary', related_name='words')
 
-    def __str__(sef)
+    def __str__(self):
         return self.name
 
 #user
 class UserMore(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     daily_words = models.IntegerField(default=50)
-    vocabulary = models.ForeignKey('Vocabulary', null=true)
+    vocabulary = models.ForeignKey('Vocabulary', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.user.username
@@ -39,9 +39,9 @@ class UserMore(models.Model):
 #user
 class Note(models.Model):
     content = models.TextField()
-    shared = models.BooleanField(default=true)
-    user = models.ForeignKey('UserMore', related_name='notes', null=True)
-    word = models.ForeignKey('Word', related_name='wordnotes', null=True)
+    shared = models.BooleanField(default=True)
+    user = models.ForeignKey('UserMore', on_delete=models.CASCADE, related_name='notes', null=True)
+    word = models.ForeignKey('Word', on_delete=models.CASCADE, related_name='wordnotes', null=True)
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -59,9 +59,9 @@ class Vocabulary(models.Model):
 
 #User's words need to be recited
 class UserWord(models.Model):
-    words = models.ForeignKey('Word')
-    user = models.ForeignKey('UserMore', related_name='words')
-    vocabulary = models.ForeignKey('Vocabulary', related_name='vocabularywords')
+    words = models.ForeignKey('Word', on_delete=models.CASCADE)
+    user = models.ForeignKey('UserMore', on_delete=models.CASCADE, related_name='words')
+    vocabulary = models.ForeignKey('Vocabulary', on_delete=models.CASCADE, related_name='vocabularywords')
     learntimes = models.IntegerField(default=0) #a word need to be recited 5 times
     task = models.ForeignKey(
         'Task',
@@ -121,7 +121,7 @@ class Task(models.Model):
         self.date = datetime.today().date()
         count = self.user.words.filter(learntimes__lt=5, vocabulary=self.user.vocabulary).count()
         if count < self.user.daily_words:
-            words = self.user.words.filter(learntimes__lt=5, vocabulary=self.user.vocabulary).order_by('?')[:count])
+            words = self.user.words.filter(learntimes__lt=5, vocabulary=self.user.vocabulary).order_by('?')[:count]
             for word in words:
                 word.task = self
                 word.save()
