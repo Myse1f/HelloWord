@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+{% block title %} 我的笔记 {% endblock %}
+{%block content%}
+<h2 style="text-align:center">Hello，{{usermore}}</h2>
+    <div class="col-md-8 col-md-offset-2">
+  {% if message %}<div class="alert alert-success" role="alert"><strong>{{ message }}</strong></div>{% endif %}
+{%if mynotes%}
+{%for note in mynotes%}
+<ul class="list-group">
+  <li class="list-group-item list-group-item-info" ><strong>单词：</strong>{{note.word}}</li>
+
+  <li class="list-group-item " ><strong>内容：</strong>{{note.content|safe}}</li>
+  <li class="list-group-item list-group-item-warning"><strong>是否公开：</strong>{%if note.shared%}公开{%else%}不公开{%endif%}</li>
+  <a href="{%url 'words:editnoteview' note.word.id%}"><button type="button" class="btn btn-info">编辑</button></a>
+</ul>
+
+{%endfor%}
+{%endif%}
+</div>
+{%endblock%}

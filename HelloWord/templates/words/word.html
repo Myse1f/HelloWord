@@ -1,0 +1,18 @@
+{%extends 'base.html'%}
+{% block title %} 背单词{% endblock %}
+{%block content%}
+<div class="col-md-8 col-md-offset-2">
+  <ul class="list-group">
+    <li class="list-group-item" ><h3 style="text-align:center">单词：{{word.name}}</h3></li>
+    <li class="list-group-item"><h3 style="text-align:center"> 解释：{{word.explanation}}</h3></li>
+    <li class="list-group-item"><h3 style="text-align:center">例句：{{word.example}}</h3></li>
+    <form action="{% url 'words:detailview' word.id%}" method="post">
+      {% csrf_token %}
+      <h3>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" name="go" value="go">继续学习</button>
+        <button type="submit" class="btn btn-success btn-lg btn-block" name="note" value="note">查看/添加笔记</button>
+      </h3>
+    </form>
+  </ul>
+</div>
+{%endblock%}

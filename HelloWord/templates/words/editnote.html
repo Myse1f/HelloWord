@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+{% load myfilters%}
+{% block title %} 编辑笔记 {% endblock %}
+{%block content%}
+<div class="col-md-8 col-md-offset-2">
+  <ul class="list-group">
+    <form action="{% url 'words:editnoteview' word.id%}" method="post">
+      {% csrf_token %}
+        <div class="form-group">
+        <label for="">笔记内容</label>
+        {{ form.content|add_class:"ckeditor"}}
+      </div>
+      <div class="form-group">
+      <label for="">是否共享</label>
+        共享{{form.shared }}
+    </div>
+    <h3>
+        <button type="submit" class="btn btn-success btn-lg btn-block" name="note" value="note">修改笔记</button>
+      </h3>
+    </form>
+  </ul>
+  {%if notes%}
+  {%for note in notes%}
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-info" ><strong>单词：</strong>{{note.word}}</li>
+    <li class="list-group-item " ><strong>内容：</strong>{{note.content|safe}}</li>
+    <li class="list-group-item " ><strong>作者：</strong>{{note.user}}</li>
+  </ul>
+  {%endfor%}
+  {%endif%}
+</div>
+{%endblock%}

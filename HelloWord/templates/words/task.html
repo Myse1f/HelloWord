@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+{%block title%}背单词{%endblock%}
+{%block content%}
+<h2 style="text-align:center">Hello，{{usermore}}</h2>
+<div class="col-md-8 col-md-offset-2">
+  <ul class="list-group">
+    <li class="list-group-item" ><h3 style="text-align:center">单词：{{taskword.name}}</h3></li>
+    <li class="list-group-item"><h3 style="text-align:center">今天还需学习{{todaytaskcount}}个单词</h3></li>
+    <form action="{% url 'words:taskview' %}" method="post">
+      {% csrf_token %}
+      <h3>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" name="know" value="know">认识</button>
+        <button type="submit" class="btn btn-warning btn-lg btn-block" name="unknow" value="unknow">不认识</button>
+        <button type="submit" class="btn btn-success btn-lg btn-block" name="master" value="master">已掌握</button>
+      </h3>
+    </form>
+  </ul>
+
+</div>
+{%endblock%}

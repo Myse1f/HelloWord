@@ -59,7 +59,7 @@ class Vocabulary(models.Model):
 
 #User's words need to be recited
 class UserWord(models.Model):
-    words = models.ForeignKey('Word', on_delete=models.CASCADE)
+    word = models.ForeignKey('Word', on_delete=models.CASCADE)
     user = models.ForeignKey('UserMore', on_delete=models.CASCADE, related_name='words')
     vocabulary = models.ForeignKey('Vocabulary', on_delete=models.CASCADE, related_name='vocabularywords')
     learntimes = models.IntegerField(default=0) #a word need to be recited 5 times
