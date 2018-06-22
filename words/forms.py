@@ -27,6 +27,18 @@ class UserForm(forms.Form):
             User.objects.get(username = username)
         except User.DoesNotExist:
             return username
+        raise forms.ValidationError('This username has been used!')
+
+    # validate email
+    def clean_email(self):
+        email = self.cleaned_email['email']
+        if not re.search(r'^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$', email):
+            raise forms.ValidationError('Email format is not valid!')
+        try:
+            User.objects.get(email = email)
+        except User.DoesNotExist:
+            return email
+        raise forms.ValidationError('This email address has been used!')
 
     # validate if both password is the same
     def clean_password(self):
