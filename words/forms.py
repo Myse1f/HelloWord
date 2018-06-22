@@ -7,8 +7,8 @@ import re
 class UserForm(forms.Form):
     username = forms.CharField(max_length=50, widget=forms.TextInput())
     email = forms.EmailField(widget=forms.EmailInput())
-    password1 = forms.CharField(max_length=50, widget=forms.PasswordInput())
-    password2 = forms.CharField(max_length=50, widget=forms.PasswordInput())
+    password1 = forms.CharField(min_length=6, max_length=50, widget=forms.PasswordInput())
+    password2 = forms.CharField(min_length=6, max_length=50, widget=forms.PasswordInput())
     daily_words = forms.IntegerField(min_value=1, max_value=1000, initial=50)
     try:
         vocabularys = Vocabulary.objects.all()

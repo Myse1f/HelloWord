@@ -2,15 +2,15 @@
 # coding:utf-8
 
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "recite.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "HelloWord.settings")
 
 
 import django
 if django.VERSION >= (1, 7):  # 自动判断版本
     django.setup()
 
-from HelloWord.models import Vocabulary
-from HelloWord.models import Word
+from words.models import Vocabulary
+from words.models import Word
 
 CET4 = Vocabulary.objects.create(name='四级')
 CET6 = Vocabulary.objects.create(name='六级')

@@ -13,46 +13,48 @@ def page_not_found(request):
     return render_to_response('404.html')
 
 def index_view(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         usermore = get_object_or_404(UserMore, user=request.user)
         context = {'usermore': usermore}
         # return the view and model
         return render(request, "words/index.html", context=context)
     else:
-        return return render(request, "words/index.html")
+        return render(request, "words/index.html")
 
-def register_view(self):
-    if request.user.is_authenticated():
+def register_view(request):
+    if request.user.is_authenticated:
         return HttpResponseRedirect(reverse("words:indexview"))
     else:
         if request.method == 'POST':
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password1 = form.cleaned_data['password1']
-            daily_words = form.cleaned_data['daily_words']
-            vocabulary_id = form.cleaned_data['vocabulary']
-            vocabulary = Vocabulary.objects.get(id=vocabulary_id)
-            user = User.objects.create_user(username=username, email=email, password=password1)
-            user.save()
-            usermore = UserMore.objects.create(user=user)
-            usermore.vocabulary = vocabulary
-            add_list = []
-            for word in vocabulary.words.all():
-                add_list.append(UserWord(word=word, user=usermore, vocabulary=vocabulary))
-            UserWord.objects.bulk_create(add_list) # bulk add userword
-            usermore.daily_words = daily_words
-            task = Task.objects.create(user=usermore, date=datetime.today().date())
-            task.new_task()
-            usermore.save() # register user info
-            login(request. user)
-            return HttpResponseRedirect(reverse("words:indexview"))
+            form = UserForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                email = form.cleaned_data['email']
+                password1 = form.cleaned_data['password1']
+                daily_words = form.cleaned_data['daily_words']
+                vocabulary_id = form.cleaned_data['vocabulary']
+                vocabulary = Vocabulary.objects.get(id=vocabulary_id)
+                user = User.objects.create_user(username=username, email=email, password=password1)
+                user.save()
+                usermore = UserMore.objects.create(user=user)
+                usermore.vocabulary = vocabulary
+                add_list = []
+                for word in vocabulary.words.all():
+                    add_list.append(UserWord(word=word, user=usermore, vocabulary=vocabulary))
+                UserWord.objects.bulk_create(add_list) # bulk add userword
+                usermore.daily_words = daily_words
+                task = Task.objects.create(user=usermore, date=datetime.today().date())
+                task.new_task()
+                usermore.save() # register user info
+                login(request, user)
+                return HttpResponseRedirect(reverse("words:indexview"))
         # get register view
         else:
             form = UserForm()
         return render(request, 'words/register.html', context={ 'form': form })
 
 def login_view(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect(reverse("words:indexview"))
     else:
         # login
@@ -70,13 +72,14 @@ def login_view(request):
                     return render(request, 'words/login.html', context={
                         'error_message': error_message,
                         'form': form})
-            else:
-                form = LoginForm()
-            return render(request, 'words/login.html', context={'form': form})
+        # GET
+        else:
+            form = LoginForm()
+        return render(request, 'words/login.html', context={'form': form})
 
 @login_required
 def logout_view(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         logout(request)
     return HttpResponseRedirect(reverse("words:indexview"))
 
@@ -89,7 +92,7 @@ def settings_view(request):
     }
     form = SettingsForm(initial=data)
     if request.method == 'POST':
-        form = SettingsForm(request.POST):
+        form = SettingsForm(request.POST)
         if form.is_valid():
             daily_words = form.cleaned_data['daily_words']
             vocabulary_id = form.cleaned_data['vocabulary']
@@ -127,7 +130,7 @@ def task_view(request):
     usermore = UserMore.objects.get(user=request.user)
     task = usermore.task
     # remember to update the task every time come in this veiw
-    task.updatetask()
+    task.update_task()
     # the vocabulary is finished
     if task.user_allcount() == 0:
         message = 'This vocabulary is finished! Go and change the vocabualry'
@@ -267,7 +270,7 @@ def moretask_view(request):
     return HttpResponseRedirect(reverse('words:taskview'))
 
 @login_required
-def deletenoteview(request, word_id):
+def deletenote_view(request, word_id):
     word = get_object_or_404(Word, id=word_id)
     usermore = UserMore.objects.get(user=request.user)
     note = Note.objects.filter(user=usermore, word=word)[0]
