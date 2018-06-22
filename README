@@ -10,6 +10,7 @@
 
 4. $python manage.py migrate //迁移数据库，基于MySQL（需要安装MySQLclient）
 这一步需要在HelloWorld文件夹下的settings.py中修改数据库用户名密码等信息为当前数据库信息
+切记数据库是以UTF8编码的，（CREATE DATABASE `HelloWord` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci）
 
 5. $python add_models.py //添加词库
 
