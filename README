@@ -1,0 +1,18 @@
+本程序使用Python3 + Django框架， 在Linux环境下搭建
+
+使用方法：
+在当前文件夹使用命令： 
+1. $virtualenv --python=python3.5 env3 //配置基于Python3.5的虚拟环境
+
+2. $source env3/bin/activate //激活环境
+
+3. $pip install -r requirements.txt //pip是基于python3的
+
+4. $python manage.py migrate //迁移数据库，基于MySQL（需要安装MySQLclient）
+这一步需要在HelloWorld文件夹下的settings.py中修改数据库用户名密码等信息为当前数据库信息
+
+5. $python add_models.py //添加词库
+
+6. $python manage.py runserver //运行程序
+
+7. 访问localhost:8000
