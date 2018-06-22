@@ -1,9 +1,12 @@
 {%extends 'base.html'%}
 {%block content%}
+{% load staticfiles %}
+<div class="row">
+<div class="col-md-8 col-md-offset-2"> <img src="{% static 'title.bmp' %}" class="img-responsive center-block" > </div>
+</div>
 {% if request.user.is_authenticated and usermore.vocabulary %}
 <h2 style="text-align:center">Hello，{{usermore}}</h2>
 <div class="col-md-8 col-md-offset-2">
-    <div class="col-md-8 col-md-offset-2"><img src="{% static 'title.bmp'%}" class="img-responsive"></div>
   {% if message == 'Task today is finished! Want one more task? Click Here!' %}<div class="alert alert-success" role="alert"><strong><a href="{%url 'words:moretaskview' %}">{{ message }}</a></strong></div>{% endif %}
   {% if message == 'This vocabulary is finished! Go and change the vocabualry'%}<div class="alert alert-success" role="alert"><strong><a href="{%url 'words:settingsview' %}">{{ message }}</a></strong></div>{% endif %}
 

@@ -3,7 +3,8 @@
 {% block title %} 用户注册 {% endblock %}
 {%block content%}
 <div class="col-md-4 col-md-offset-4">
-  {%if form.username.errors%}<div class="alert alert-warning" role="alert"><strong>{{ form.username.errors }}</strong></div>{%endif%}
+{%if form.username.errors%}<div class="alert alert-warning" role="alert"><strong>{{ form.username.errors }}</strong></div>{%endif%}
+{%if form.email.errors%}<div class="alert alert-warning" role="alert"><strong>{{ form.email.errors }}</strong></div>{%endif%}
 {%if form.password2.errors%}<div class="alert alert-warning" role="alert"><strong>{{ form.password2.errors }}</strong></div>{%endif%}
   <div class="panel panel-default">
   <div class="panel-heading">

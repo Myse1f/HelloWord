@@ -1,9 +1,8 @@
-
 {%extends 'base.html'%}
 {% block title %} 我的笔记 {% endblock %}
 {%block content%}
 <h2 style="text-align:center">Hello，{{usermore}}</h2>
-    <div class="col-md-8 col-md-offset-2">
+<div class="col-md-8 col-md-offset-2">
   {% if message %}<div class="alert alert-success" role="alert"><strong>{{ message }}</strong></div>{% endif %}
 {%if notes%}
 {%for note in notes.object_list%}

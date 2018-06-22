@@ -6,7 +6,7 @@ import re
 
 class UserForm(forms.Form):
     username = forms.CharField(max_length=50, widget=forms.TextInput())
-    email = forms.EmailField(widget=forms.EmailInput())
+    email = forms.CharField(widget=forms.TextInput())
     password1 = forms.CharField(min_length=6, max_length=50, widget=forms.PasswordInput())
     password2 = forms.CharField(min_length=6, max_length=50, widget=forms.PasswordInput())
     daily_words = forms.IntegerField(min_value=1, max_value=1000, initial=50)
@@ -31,7 +31,7 @@ class UserForm(forms.Form):
 
     # validate email
     def clean_email(self):
-        email = self.cleaned_email['email']
+        email = self.cleaned_data['email']
         if not re.search(r'^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$', email):
             raise forms.ValidationError('Email format is not valid!')
         try:
@@ -41,13 +41,13 @@ class UserForm(forms.Form):
         raise forms.ValidationError('This email address has been used!')
 
     # validate if both password is the same
-    def clean_password(self):
+    def clean_password2(self):
         if 'password1' in self.cleaned_data:
             password1 = self.cleaned_data['password1']
             password2 = self.cleaned_data['password2']
             if password1 == password2:
                 return password2
-            raise forms.ValidationError('The password is not the same!')
+            raise forms.ValidationError('The both passwords are not the same!')
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=50, widget=forms.TextInput())
