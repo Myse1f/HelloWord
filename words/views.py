@@ -116,7 +116,7 @@ def settings_view(request):
                     #bulk import
                     UserWord.objects.bulk_create(add_list)
                 usermore.daily_words = daily_words
-                usermore.task.updatetask()
+                usermore.task.update_task()
                 usermore.save() #save the model
             return HttpResponseRedirect(reverse("words:indexview"))
         else:

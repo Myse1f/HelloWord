@@ -134,5 +134,5 @@ class Task(models.Model):
     # update task every day
     def update_task(self):
         if self.date < datetime.today().date():
-            self.newtask()
+            self.new_task()
             self.save()

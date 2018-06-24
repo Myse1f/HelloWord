@@ -1,8 +1,10 @@
 {%extends 'base.html'%}
 {%block content%}
 {% load staticfiles %}
+<div class="container">
 <div class="row">
 <div class="col-md-8 col-md-offset-2"> <img src="{% static 'title.bmp' %}" class="img-responsive center-block" > </div>
+</div>
 </div>
 {% if request.user.is_authenticated and usermore.vocabulary %}
 <h2 style="text-align:center">Hello，{{usermore}}</h2>
